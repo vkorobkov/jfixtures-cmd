@@ -19,6 +19,5 @@ class PromptTest extends Specification {
         writePrompt(teePrintStream)
         then:
         1 * printStream.println()
-        1 * printStream.close()
     }
 }
