@@ -18,6 +18,7 @@ class PromptTest extends Specification {
         when:
         writePrompt(teePrintStream)
         then:
+        2 * printStream.append(_)
         1 * printStream.println()
     }
 }
