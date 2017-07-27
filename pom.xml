@@ -53,6 +53,8 @@
 
         <!--Test dependencies versions-->
         <spock-core.version>1.1-groovy-2.4</spock-core.version>
+        <cglib-nodep.version>3.2.5</cglib-nodep.version>
+        <objenesis.version>2.6</objenesis.version>
 
         <!--Plugins-->
         <maven-assembly-plugin.version>3.0.0</maven-assembly-plugin.version>
@@ -233,6 +235,18 @@
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
             <version>${spock-core.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>${cglib-nodep.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.objenesis</groupId>
+            <artifactId>objenesis</artifactId>
+            <version>${objenesis.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
