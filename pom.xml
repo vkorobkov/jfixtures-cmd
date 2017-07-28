@@ -50,6 +50,7 @@
         <commons-cli.version>1.4</commons-cli.version>
         <lombok.version>1.16.18</lombok.version>
         <jfiglet.version>0.0.8</jfiglet.version>
+        <logback.version>1.2.3</logback.version>
 
         <!--Test dependencies versions-->
         <spock-core.version>1.1-groovy-2.4</spock-core.version>
@@ -130,6 +131,9 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <excludes>
+                        <exclude>com/github/vkorobkov/jfixturescmd/Prompt*.class</exclude>
+                    </excludes>
                     <rules>
                         <rule>
                             <element>CLASS</element>
@@ -225,6 +229,16 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
         </dependency>
         <dependency>
             <groupId>com.github.lalyos</groupId>
