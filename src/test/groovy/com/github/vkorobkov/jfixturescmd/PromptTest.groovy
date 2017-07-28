@@ -1,13 +1,11 @@
 package com.github.vkorobkov.jfixturescmd
 
-import org.spockframework.util.TeePrintStream
 import spock.lang.Specification
 
-import static com.github.vkorobkov.jfixturescmd.Prompt.writePrompt
+import static com.github.vkorobkov.jfixturescmd.Prompt.write
 
 class PromptTest extends Specification {
     def printStream = Mock(PrintStream)
-    def teePrintStream = new TeePrintStream(printStream)
 
     def "constructor test"() {
         expect:
@@ -15,10 +13,12 @@ class PromptTest extends Specification {
     }
 
     def "should write prompt"() {
+        given:
+        System.setOut(printStream)
         when:
-        writePrompt(teePrintStream)
+        write()
         then:
-        2 * printStream.append(_)
-        1 * printStream.println()
+        2 * printStream.write(_)
+        2 * printStream.flush()
     }
 }
