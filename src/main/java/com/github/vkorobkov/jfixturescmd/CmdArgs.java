@@ -29,48 +29,56 @@ class CmdArgs {
 
     @SneakyThrows
     void parse() {
-        CommandLineParser parser = new DefaultParser();
-        CommandLine commandLine;
         try {
-            commandLine = parser.parse(options, args);
-
             if (args.length == 0) {
                 help();
             } else {
-                String srcYaml = ".";
-                String outputSql = ".";
-                String sqlType = "postgres";
+                CommandLineParser parser = new DefaultParser();
+                CommandLine commandLine = parser.parse(options, args);
 
                 if (commandLine.hasOption("h")) {
                     help();
                 } else if (commandLine.hasOption("version")) {
                     version();
                 } else {
-                    if (commandLine.hasOption("y")) {
-                        srcYaml = commandLine.getOptionValue("y");
-                    }
-
-                    if (commandLine.hasOption("t") && SqlTypes.contains(commandLine.getOptionValue("t"))) {
-                        sqlType = commandLine.getOptionValue("t");
-                    }
-
-                    Method method = JFixtures.class.getMethod(sqlType, String.class);
-                    JFixturesResultImpl result = (JFixturesResultImpl)method.invoke(null, srcYaml);
-
-                    if (commandLine.hasOption("s")) {
-                        outputSql = commandLine.getOptionValue("s");
-                     }
-
-                    if (commandLine.hasOption("console")) {
-                        log.info(result.asString());
-                    } else {
-                        result.toFile(outputSql);
-                    }
+                    parseCmdArguments(commandLine);
                 }
             }
         } catch (ParseException e) {
-            log.error("Failed to parse command line properties: " + e.getMessage());
+            log.error("Failed to parse command line arguments: " + e.getMessage());
             help();
+        }
+    }
+
+    @SneakyThrows
+    private void parseCmdArguments(final CommandLine commandLine) throws ParseException {
+        String srcYaml;
+        String sqlType;
+
+        if (commandLine.hasOption("y")) {
+            srcYaml = commandLine.getOptionValue("y");
+        } else {
+            throw new ParseException("Source YAML folder is not set or not valid");
+        }
+
+        if (commandLine.hasOption("t") && SqlTypes.contains(commandLine.getOptionValue("t"))) {
+            sqlType = commandLine.getOptionValue("t");
+        } else {
+            throw new ParseException("SQL type is not set or not valid");
+        }
+
+        Method method = JFixtures.class.getMethod(sqlType, String.class);
+        JFixturesResultImpl result = (JFixturesResultImpl)method.invoke(null, srcYaml);
+
+
+        if (commandLine.hasOption("console")) {
+            log.info(result.asString());
+        } else {
+            String outputSql = ".";
+            if (commandLine.hasOption("s")) {
+                outputSql = commandLine.getOptionValue("s");
+            }
+            result.toFile(outputSql);
         }
     }
 
