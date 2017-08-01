@@ -1,94 +1,57 @@
 package com.github.vkorobkov.jfixturescmd;
 
-import com.github.lalyos.jfiglet.FigletFont;
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+import com.beust.jcommander.ParameterException;
 import com.github.vkorobkov.jfixtures.JFixtures;
 import com.github.vkorobkov.jfixtures.fluent.JFixturesResultImpl;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.cli.*;
 
 import java.lang.reflect.Method;
 
-import static com.github.vkorobkov.jfixturescmd.Prompt.getProperties;
-
 @Slf4j
-class CmdArgs {
-    private String[] args = null;
-    private Options options = new Options();
+final class CmdArgs {
+    @Parameter(names = "-type", description = "SQL type", required = true, converter = SqlTypesConverter.class, order = 0)
+    private SqlTypes sqlType;
+    @Parameter(names = "-src", description = "Source YAML folder path", required = true, order = 1)
+    private String srcYaml;
+    @Parameter(names = "-target", description = "Target SQL file path", required = true, order = 2)
+    private String outputSql;
+    @Parameter(names = {"-c", "--console"}, description = "Print result SQL to console", order = 3)
+    private boolean console;
+    @Parameter(names = {"-h", "--help"}, help = true, order = 4)
+    private boolean help;
 
-    CmdArgs(String[] args) {
-        this.args = args;
-        this.options.addOption("y", "srcYaml", true, "set source YAML folder path");
-        this.options.addOption("s", "outputSql", true, "set output SQL file path");
-        this.options.addOption("t", "sqlType", true, "set SQL type: " + SqlTypes.getValues().toLowerCase());
-        this.options.addOption("h", "help", false, "print help message");
-        this.options.addOption("verbose", "be extra verbose");
-        this.options.addOption("version", "print the version information and exit");
-        this.options.addOption("console", "print result SQL to console");
-    }
+    void parse(final String[] args) {
+        final JCommander jCommander = JCommander.newBuilder()
+                .addObject(this)
+                .programName("JFixtures CMD")
+                .build();
 
-    @SneakyThrows
-    void parse() {
         try {
-            if (args.length == 0) {
-                help();
-            } else {
-                CommandLineParser parser = new DefaultParser();
-                CommandLine commandLine = parser.parse(options, args);
+            jCommander.parse(args);
 
-                if (commandLine.hasOption("h")) {
-                    help();
-                } else if (commandLine.hasOption("version")) {
-                    version();
-                } else {
-                    parseCmdArguments(commandLine);
-                }
+            if (args.length == 0 || this.help) {
+                jCommander.usage();
+            } else {
+                parseCmdArguments();
             }
-        } catch (ParseException e) {
+        } catch (ParameterException e) {
             log.error("Failed to parse command line arguments: " + e.getMessage());
-            help();
+            jCommander.usage();
         }
     }
 
     @SneakyThrows
-    private void parseCmdArguments(final CommandLine commandLine) throws ParseException {
-        String srcYaml;
-        String sqlType;
-
-        if (commandLine.hasOption("y")) {
-            srcYaml = commandLine.getOptionValue("y");
-        } else {
-            throw new ParseException("Source YAML folder is not set or not valid");
-        }
-
-        if (commandLine.hasOption("t") && SqlTypes.contains(commandLine.getOptionValue("t"))) {
-            sqlType = commandLine.getOptionValue("t");
-        } else {
-            throw new ParseException("SQL type is not set or not valid");
-        }
-
-        Method method = JFixtures.class.getMethod(sqlType, String.class);
+    private void parseCmdArguments() {
+        Method method = JFixtures.class.getMethod(String.valueOf(sqlType).toLowerCase(), String.class);
         JFixturesResultImpl result = (JFixturesResultImpl)method.invoke(null, srcYaml);
 
-
-        if (commandLine.hasOption("console")) {
+        if (console) {
             log.info(result.asString());
         } else {
-            String outputSql = ".";
-            if (commandLine.hasOption("s")) {
-                outputSql = commandLine.getOptionValue("s");
-            }
             result.toFile(outputSql);
         }
-    }
-
-    @SneakyThrows
-    private void version() {
-        log.info(FigletFont.convertOneLine("v" + getProperties().getProperty("version")));
-    }
-
-    private void help() {
-        HelpFormatter formatter = new HelpFormatter();
-        formatter.printHelp("JFixtures CMD", options);
     }
 }

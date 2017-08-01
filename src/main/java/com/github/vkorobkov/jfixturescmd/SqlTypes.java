@@ -9,16 +9,17 @@ public enum SqlTypes {
     H2,
     CLICKHOUSE;
 
-    public static boolean contains(String value) {
-        return EnumSet.allOf(SqlTypes.class)
-                .stream()
-                .anyMatch(type -> type.name().equalsIgnoreCase(value));
-    }
-
     public static String getValues() {
         return EnumSet.allOf(SqlTypes.class)
                 .stream()
                 .map(Enum::name)
                 .collect(Collectors.joining(", "));
+    }
+
+    public static SqlTypes fromString(final String value) {
+        return EnumSet.allOf(SqlTypes.class)
+                .stream()
+                .filter(type -> type.name().equalsIgnoreCase(value))
+                .findFirst().orElse(null);
     }
 }
