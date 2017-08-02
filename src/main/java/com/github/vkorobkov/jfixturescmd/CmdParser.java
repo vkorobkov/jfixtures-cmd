@@ -38,7 +38,6 @@ final class CmdParser {
     private void generateSql() {
         Method method = JFixtures.class.getMethod(String.valueOf(cmdArgs.getSqlType()).toLowerCase(), String.class);
         JFixturesResultImpl result = (JFixturesResultImpl)method.invoke(null, cmdArgs.getSource());
-
         result.toFile(cmdArgs.getDestination());
     }
 }
