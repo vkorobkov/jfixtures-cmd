@@ -18,7 +18,7 @@ class PromptTest extends Specification {
         when:
         write()
         then:
-        2 * printStream.write(_)
-        2 * printStream.flush()
+        4 * printStream.write(_)
+        4 * printStream.flush()
     }
 }
