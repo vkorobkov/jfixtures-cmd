@@ -6,6 +6,6 @@ public final class Main {
 
     public static void main(String[] args) {
         Prompt.write();
-        new CmdArgs().parse(args);
+        new CmdParser().parse(args);
     }
 }

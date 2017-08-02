@@ -6,11 +6,11 @@
 
     <groupId>com.github.vkorobkov</groupId>
     <artifactId>jfixtures-cmd</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>JFixtures CMD</name>
-    <description>Command line interface for Jfixtures project</description>
+    <description>Command line interface for JFixtures project</description>
     <url>https://github.com/vkorobkov/jfixtures-cmd</url>
 
     <licenses>
@@ -115,6 +115,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
             </plugin>
 
@@ -175,20 +176,21 @@
                 </executions>
             </plugin>
 
-            <!--<plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
                 <version>${findbugs-maven-plugin.version}</version>
                 <configuration>
-                    &lt;!&ndash; Enables analysis which takes more memory but finds more bugs.
-                    If you run out of memory, changes the value of the effort element to 'low'.&ndash;&gt;
+                    <!-- Enables analysis which takes more memory but finds more bugs.
+                    If you run out of memory, changes the value of the effort element to 'low'.-->
                     <effort>Max</effort>
-                    &lt;!&ndash; Reports all bugs (other values are medium and max) &ndash;&gt;
+                    <!-- Reports all bugs (other values are medium and max) -->
                     <threshold>Low</threshold>
                     <xmlOutput>true</xmlOutput>
+                    <excludeFilterFile>src/test/resources/findbugs-exclude.xml</excludeFilterFile>
                 </configuration>
                 <executions>
-                    &lt;!&ndash; Ensures that FindBugs inspects source code when project is compiled.&ndash;&gt;
+                    <!-- Ensures that FindBugs inspects source code when project is compiled.-->
                     <execution>
                         <id>analyze-compile</id>
                         <phase>compile</phase>
@@ -216,7 +218,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
         </plugins>
     </build>
 
