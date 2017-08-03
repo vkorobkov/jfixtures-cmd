@@ -12,7 +12,7 @@ class PropertiesReaderTest extends Specification {
         expect:
         PropertiesReader.PROJECT_NAME == "\${project.name}"
         PropertiesReader.PROJECT_VERSION == "\${project.version}"
-        PropertiesReader.PROJECT_LINK.contains("https://github.com/vkorobkov/jfixtures-cmd")
+        PropertiesReader.PROJECT_LINK.contains("\${project.scm.url}")
         PropertiesReader.J_FIXTURES_VERSION == "\${jfixtures.version}"
     }
 }

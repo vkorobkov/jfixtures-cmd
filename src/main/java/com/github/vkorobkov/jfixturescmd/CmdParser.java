@@ -12,18 +12,15 @@ import java.lang.reflect.Method;
 
 @Slf4j
 final class CmdParser {
-    private final CmdArgs cmdArgs = new CmdArgs();
+    private final CmdArgs cmdArgs = CmdArgs.getInstance();
 
     void parse(final String[] args) {
-        final JCommander jCommander = JCommander.newBuilder()
-                .addObject(cmdArgs)
-                .programName(PropertiesReader.PROJECT_NAME)
-                .build();
+        final JCommander jCommander = buildJCommander();
 
         try {
             jCommander.parse(args);
 
-            if (args.length == 0 || cmdArgs.isHelp()) {
+            if (cmdArgs.isHelp()) {
                 jCommander.usage();
             } else {
                 generateSql();
@@ -34,9 +31,17 @@ final class CmdParser {
         }
     }
 
+    private JCommander buildJCommander() {
+        return JCommander.newBuilder()
+                    .addObject(cmdArgs)
+                    .programName(PropertiesReader.PROJECT_NAME)
+                    .build();
+    }
+
     @SneakyThrows
     private void generateSql() {
-        Method method = JFixtures.class.getMethod(String.valueOf(cmdArgs.getSqlType()).toLowerCase(), String.class);
+        String methodName = String.valueOf(cmdArgs.getSqlType()).toLowerCase();
+        Method method = JFixtures.class.getMethod(methodName, String.class);
         JFixturesResultImpl result = (JFixturesResultImpl)method.invoke(null, cmdArgs.getSource());
         result.toFile(cmdArgs.getDestination());
     }
