@@ -17,6 +17,4 @@ final class CmdArgs {
 
     @Parameter(names = { "-h", "--help" }, help = true)
     private boolean help;
-
-    public static final CmdArgs INSTANCE = new CmdArgs();
 }

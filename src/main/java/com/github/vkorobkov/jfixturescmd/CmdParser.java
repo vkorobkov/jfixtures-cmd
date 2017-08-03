@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 final class CmdParser {
-    private static final CmdArgs CMD_ARGS = CmdArgs.INSTANCE;
+    private CmdArgs cmdArgs = new CmdArgs();
 
     void parse(String[] args) {
         final JCommander jCommander = buildJCommander();
@@ -19,7 +19,7 @@ final class CmdParser {
         try {
             jCommander.parse(args);
 
-            if (CMD_ARGS.isHelp()) {
+            if (cmdArgs.isHelp()) {
                 jCommander.usage();
             } else {
                 generateSql();
@@ -32,15 +32,15 @@ final class CmdParser {
 
     private JCommander buildJCommander() {
         return JCommander.newBuilder()
-                .addObject(CMD_ARGS)
+                .addObject(cmdArgs)
                 .programName(PropertiesReader.PROJECT_NAME)
                 .build();
     }
 
     @SneakyThrows
     private void generateSql() {
-        JFixturesResultImpl result = (JFixturesResultImpl)chooseDialect(CMD_ARGS.getSqlType(), CMD_ARGS.getSource());
-        result.toFile(CMD_ARGS.getDestination());
+        JFixturesResultImpl result = (JFixturesResultImpl)chooseDialect(cmdArgs.getSqlType(), cmdArgs.getSource());
+        result.toFile(cmdArgs.getDestination());
     }
 
     private JFixturesResult chooseDialect(SqlType type, String src) {
