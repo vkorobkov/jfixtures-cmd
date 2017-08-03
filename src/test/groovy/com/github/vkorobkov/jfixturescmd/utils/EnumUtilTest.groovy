@@ -1,6 +1,6 @@
 package com.github.vkorobkov.jfixturescmd.utils
 
-import com.github.vkorobkov.jfixturescmd.SqlTypes
+import com.github.vkorobkov.jfixturescmd.SqlType
 import spock.lang.Specification
 
 class EnumUtilTest extends Specification {
@@ -11,16 +11,16 @@ class EnumUtilTest extends Specification {
 
     def "valueOf equals cases"() {
         expect:
-        EnumUtil.valueOf(SqlTypes.class, value).get() == expected
+        EnumUtil.valueOf(SqlType.class, value).get() == expected
 
         where:
         value   | expected
-        "MYSQL" | SqlTypes.MYSQL
+        "MYSQL" | SqlType.MYSQL
     }
 
     def "valueOf not equals cases"() {
         expect:
-        EnumUtil.valueOf(SqlTypes.class, value) == expected
+        EnumUtil.valueOf(SqlType.class, value) == expected
 
         where:
         value    | expected
