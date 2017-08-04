@@ -3,7 +3,27 @@
 # jfixtures-cmd
 Command line interface for JFixtures project
 
-## Available commands
-java -jar target/jfixtures-cmd-1.0.0.jar
-java -jar target/jfixtures-cmd-1.0.0.jar -h
-java -jar target/jfixtures-cmd-1.0.0.jar -src src/test/resources/fixtures -dst out.sql -type mysql
+## Dependencies
+**JFixtures requires Java 8** or higher and it is written in Java 8.
+
+## Usage
+* Build an executable jar with required dependencies by executing `mvn clean install`
+* You are ready to use JFixturesCMD!  
+**Available options:**
+```bash
+    java -jar options:
+    * -type
+     SQL type
+     Possible Values: [POSTGRES, MYSQL, H2, CLICKHOUSE]
+    * -src
+     Source YAML folder path
+    * -dst
+     Destination SQL file path
+    -h, --help
+     Print help message
+```
+
+### Examples
+```bash
+java -jar jfixtures-cmd-1.0.0.jar -src path/to/fixures/folder -dst path/to/ouput/file.sql -type postgres
+```

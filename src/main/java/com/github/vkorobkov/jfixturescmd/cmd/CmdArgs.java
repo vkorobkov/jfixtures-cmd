@@ -17,6 +17,6 @@ final class CmdArgs {
     @Parameter(names = "-dst", description = "Destination SQL file path", required = true, order = 2)
     private String destination;
 
-    @Parameter(names = { "-h", "--help" }, help = true)
+    @Parameter(names = { "-h", "--help" }, help = true, description = "Print help message")
     private boolean help;
 }
