@@ -14,11 +14,11 @@ class PromptTest extends Specification {
 
     def "should write prompt"() {
         given:
-        System.setOut(printStream)
+        System.out = printStream
         when:
         write()
         then:
-        2 * printStream.write(_)
-        2 * printStream.flush()
+        (1.._) * printStream.write(_)
+        (1.._) * printStream.flush()
     }
 }
