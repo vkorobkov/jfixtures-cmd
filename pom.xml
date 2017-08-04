@@ -46,7 +46,7 @@
         <java.version>1.8</java.version>
 
         <!--Project dependencies version-->
-        <jfixtures.version>1.0.8</jfixtures.version>
+        <jfixtures.version>1.0.9</jfixtures.version>
         <jcommander.version>1.72</jcommander.version>
         <lombok.version>1.16.18</lombok.version>
         <jfiglet.version>0.0.8</jfiglet.version>
@@ -141,7 +141,6 @@
                 <configuration>
                     <excludes>
                         <exclude>com/github/vkorobkov/jfixturescmd/Prompt.class</exclude>
-                        <exclude>com/github/vkorobkov/jfixturescmd/cmd/CmdParser.class</exclude>
                         <exclude>com/github/vkorobkov/jfixturescmd/utils/PropertiesReader.class</exclude>
                     </excludes>
                     <rules>

@@ -1,6 +1,6 @@
 package com.github.vkorobkov.jfixturescmd.utils
 
-import com.github.vkorobkov.jfixturescmd.sql.SqlType
+import com.github.vkorobkov.jfixtures.sql.SqlType
 import spock.lang.Specification
 
 class EnumUtilTest extends Specification {

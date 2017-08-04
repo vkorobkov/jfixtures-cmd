@@ -2,6 +2,7 @@ package com.github.vkorobkov.jfixturescmd.sql;
 
 import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.ParameterException;
+import com.github.vkorobkov.jfixtures.sql.SqlType;
 import com.github.vkorobkov.jfixturescmd.utils.EnumUtil;
 import lombok.SneakyThrows;
 
