@@ -7,8 +7,6 @@ Command line interface for JFixtures project
 **JFixtures requires Java 8** or higher and it is written in Java 8.
 
 ## Usage
-* Build an executable jar with required dependencies by executing `mvn clean install`
-* You are ready to use JFixturesCMD!  
 **Available options:**
 ```bash
     java -jar options:
