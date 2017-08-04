@@ -7,7 +7,6 @@ import com.github.vkorobkov.jfixtures.fluent.JFixturesResult;
 import com.github.vkorobkov.jfixtures.fluent.JFixturesResultImpl;
 import com.github.vkorobkov.jfixturescmd.sql.SqlType;
 import com.github.vkorobkov.jfixturescmd.utils.PropertiesReader;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -38,7 +37,6 @@ public final class CmdParser {
                 .build();
     }
 
-    @SneakyThrows
     private void generateSql() {
         String destination = cmdArgs.getDestination();
         JFixturesResultImpl result = (JFixturesResultImpl)chooseDialect(cmdArgs.getSqlType(), cmdArgs.getSource());
