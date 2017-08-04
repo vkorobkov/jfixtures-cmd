@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
     <Match>
-        <Class name="com.github.vkorobkov.jfixturescmd.CmdParser"/>
+        <Class name="com.github.vkorobkov.jfixturescmd.cmd.CmdParser"/>
         <Bug pattern="DM_CONVERT_CASE"/>
     </Match>
     <Match>
-        <Class name="com.github.vkorobkov.jfixturescmd.SqlTypeConverter"/>
+        <Class name="com.github.vkorobkov.jfixturescmd.sql.SqlTypeConverter"/>
         <Bug pattern="DM_CONVERT_CASE"/>
     </Match>
 </FindBugsFilter>

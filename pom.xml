@@ -141,7 +141,7 @@
                 <configuration>
                     <excludes>
                         <exclude>com/github/vkorobkov/jfixturescmd/Prompt.class</exclude>
-                        <exclude>com/github/vkorobkov/jfixturescmd/CmdParser.class</exclude>
+                        <exclude>com/github/vkorobkov/jfixturescmd/cmd/CmdParser.class</exclude>
                         <exclude>com/github/vkorobkov/jfixturescmd/utils/PropertiesReader.class</exclude>
                     </excludes>
                     <rules>

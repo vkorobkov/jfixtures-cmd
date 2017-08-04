@@ -1,19 +1,20 @@
-package com.github.vkorobkov.jfixturescmd;
+package com.github.vkorobkov.jfixturescmd.cmd;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import com.github.vkorobkov.jfixtures.JFixtures;
 import com.github.vkorobkov.jfixtures.fluent.JFixturesResult;
 import com.github.vkorobkov.jfixtures.fluent.JFixturesResultImpl;
+import com.github.vkorobkov.jfixturescmd.sql.SqlType;
 import com.github.vkorobkov.jfixturescmd.utils.PropertiesReader;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-final class CmdParser {
-    private CmdArgs cmdArgs = new CmdArgs();
+public final class CmdParser {
+    private final CmdArgs cmdArgs = new CmdArgs();
 
-    void parse(String[] args) {
+    public void parse(String[] args) {
         final JCommander jCommander = buildJCommander();
 
         try {
@@ -39,8 +40,10 @@ final class CmdParser {
 
     @SneakyThrows
     private void generateSql() {
+        String destination = cmdArgs.getDestination();
         JFixturesResultImpl result = (JFixturesResultImpl)chooseDialect(cmdArgs.getSqlType(), cmdArgs.getSource());
-        result.toFile(cmdArgs.getDestination());
+        result.toFile(destination);
+        log.info("The SQL file has bees successfully created: " + destination);
     }
 
     private JFixturesResult chooseDialect(SqlType type, String src) {

@@ -1,6 +1,7 @@
-package com.github.vkorobkov.jfixturescmd
+package com.github.vkorobkov.jfixturescmd.sql
 
 import com.beust.jcommander.ParameterException
+import com.github.vkorobkov.jfixturescmd.sql.SqlTypeConverter
 import spock.lang.Specification
 
 class SqlTypeConverterTest extends Specification {

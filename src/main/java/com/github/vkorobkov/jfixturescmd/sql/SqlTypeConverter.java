@@ -1,4 +1,4 @@
-package com.github.vkorobkov.jfixturescmd;
+package com.github.vkorobkov.jfixturescmd.sql;
 
 import com.beust.jcommander.IStringConverter;
 import com.beust.jcommander.ParameterException;

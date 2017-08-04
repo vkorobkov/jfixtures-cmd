@@ -1,4 +1,4 @@
-package com.github.vkorobkov.jfixturescmd;
+package com.github.vkorobkov.jfixturescmd.sql;
 
 public enum SqlType {
     POSTGRES,

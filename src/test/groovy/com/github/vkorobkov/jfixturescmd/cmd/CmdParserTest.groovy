@@ -1,4 +1,4 @@
-package com.github.vkorobkov.jfixturescmd
+package com.github.vkorobkov.jfixturescmd.cmd
 
 import spock.lang.Specification
 
@@ -46,8 +46,8 @@ class CmdParserTest extends Specification {
         when:
         cmdParser.parse(args)
         then:
-        0 * printStream.write(_)
-        0 * printStream.flush()
+        1 * printStream.write(_)
+        1 * printStream.flush()
         0 * printStream.println({ it.contains("Usage") })
         сmdArgs.sqlType.toString() == "MYSQL"
         сmdArgs.source.toString() == "src/test/resources/fixtures"
