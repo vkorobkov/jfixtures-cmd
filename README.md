@@ -1,7 +1,7 @@
 ![alt text](https://travis-ci.org/vkorobkov/jfixtures-cmd.svg?branch=master "Build status")
 
 # jfixtures-cmd
-Command line interface for JFixtures project
+Command line interface for [JFixtures project](https://github.com/vkorobkov/jfixtures)
 
 ## Dependencies
 **JFixtures requires Java 8** or higher and it is written in Java 8.
@@ -11,7 +11,7 @@ Command line interface for JFixtures project
 * Navigate to the folder where jfixtures-jar is localed
 * Type a bash command:
 ```bash
-java -jar jfixtures-cmd-1.05.jar <options>
+java -jar jfixtures-cmd-1.XX.jar <options>
 
 where options are:
 
