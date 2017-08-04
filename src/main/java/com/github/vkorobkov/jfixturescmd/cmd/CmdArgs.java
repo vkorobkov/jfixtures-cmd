@@ -1,7 +1,7 @@
 package com.github.vkorobkov.jfixturescmd.cmd;
 
 import com.beust.jcommander.Parameter;
-import com.github.vkorobkov.jfixturescmd.sql.SqlType;
+import com.github.vkorobkov.jfixtures.sql.SqlType;
 import com.github.vkorobkov.jfixturescmd.sql.SqlTypeConverter;
 import lombok.Getter;
 
