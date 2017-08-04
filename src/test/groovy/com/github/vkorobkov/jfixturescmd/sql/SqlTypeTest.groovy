@@ -1,6 +1,5 @@
 package com.github.vkorobkov.jfixturescmd.sql
 
-import com.github.vkorobkov.jfixturescmd.sql.SqlType
 import spock.lang.Specification
 
 class SqlTypeTest extends Specification {
