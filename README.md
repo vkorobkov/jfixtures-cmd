@@ -7,18 +7,25 @@ Command line interface for JFixtures project
 **JFixtures requires Java 8** or higher and it is written in Java 8.
 
 ## Usage
-**Available options:**
+* Download the last version of jfixtures-cmd jar file from maven central(TODO: place a link here)
+* Navigate to the folder where jfixtures-jar is localed
+* Type a bash command:
 ```bash
-    java -jar options:
-    * -type
-     SQL type
-     Possible Values: [POSTGRES, MYSQL, H2, CLICKHOUSE]
-    * -src
-     Source YAML folder path
-    * -dst
-     Destination SQL file path
-    -h, --help
-     Print help message
+java -jar jfixtures-cmd-1.05.jar <options>
+
+where options are:
+
+  -type [required] 
+  the database dialect to general SQL result for. Possible values are: postgres, mysql, h2, clickhouse. Not cases sensitive
+  
+  -src [required] 
+  relative or full path to the folder where the source yaml fixtures are
+  
+  -dst [required] 
+  relative or full path to the destination SQL file. Old file(if exists) will be overriten.
+  
+  -h, --help [optional]
+  Print help message
 ```
 
 ### Examples
