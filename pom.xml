@@ -64,7 +64,6 @@
         <gmavenplus-plugin.version>1.5</gmavenplus-plugin.version>
         <findbugs-maven-plugin.version>3.0.4</findbugs-maven-plugin.version>
         <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
-        <maven-surefire-plugin.version>2.20</maven-surefire-plugin.version>
     </properties>
 
     <build>
@@ -165,17 +164,6 @@
             </plugin>
 
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <excludes>
-                        <exclude>**/JarIntegrationTest.java</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-
-            <plugin>
                 <groupId>org.codehaus.gmavenplus</groupId>
                 <artifactId>gmavenplus-plugin</artifactId>
                 <version>${gmavenplus-plugin.version}</version>
@@ -194,7 +182,10 @@
                         </goals>
                         <configuration>
                             <scripts>
-                                <script>file:///${basedir}/src/test/groovy/com/github/vkorobkov/jfixturescmd/JarIntegrationTest.groovy</script>
+                                <script>
+                                    jarOutput = "java -jar target/jfixtures-cmd-${version}.jar --help".execute().text
+                                    assert jarOutput.contains("Usage: JFixtures CMD [options]")
+                                </script>
                             </scripts>
                         </configuration>
                     </execution>
