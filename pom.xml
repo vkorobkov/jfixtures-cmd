@@ -183,7 +183,7 @@
                         <configuration>
                             <scripts>
                                 <script>
-                                    jarOutput = "java -jar target/jfixtures-cmd-${version}.jar --help".execute().text
+                                    jarOutput = "java -jar ${build.directory}/${artifactId}-${version}.jar --help".execute().text
                                     assert jarOutput.contains("Usage: JFixtures CMD [options]")
                                 </script>
                             </scripts>
