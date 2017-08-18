@@ -23,8 +23,8 @@ class CmdParserTest extends Specification {
         when:
         cmdParser.parse()
         then:
-        2 * printStream.write(_)
-        2 * printStream.flush()
+        1 * printStream.write(_)
+        1 * printStream.flush()
         1 * printStream.println({ it.contains("Usage") })
     }
 
@@ -34,8 +34,8 @@ class CmdParserTest extends Specification {
         when:
         cmdParser.parse(args)
         then:
-        1 * printStream.write(_)
-        1 * printStream.flush()
+        0 * printStream.write(_)
+        0 * printStream.flush()
         1 * printStream.println({ it.contains("Usage") })
         сmdArgs.isHelp()
     }

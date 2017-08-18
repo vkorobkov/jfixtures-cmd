@@ -16,7 +16,7 @@ public final class CmdParser {
         final JCommander jCommander = buildJCommander();
 
         try {
-            log.info("Start parsing command line...");
+            log.debug("Start parsing command line...");
             jCommander.parse(args);
 
             if (cmdArgs.isHelp()) {
@@ -39,13 +39,13 @@ public final class CmdParser {
 
     private void generateSql() {
         String destination = cmdArgs.getDestination();
-        String fixtureFolder = cmdArgs.getSource();
+        String fixturesFolder = cmdArgs.getSource();
         SqlType sqlType = cmdArgs.getSqlType();
 
-        log.info("Fixture folder: " + fixtureFolder);
+        log.info("Fixtures folder: " + fixturesFolder);
         log.info("SQL type: " + sqlType);
-        JFixturesResult result = JFixtures.byDialect(fixtureFolder, sqlType);
+        JFixturesResult result = JFixtures.byDialect(fixturesFolder, sqlType);
         result.toFile(destination);
-        log.info("The SQL file has bees successfully created: " + destination);
+        log.info("\nSUCCESS (destination file: " + destination + ")\n");
     }
 }
