@@ -17,6 +17,6 @@ final class Prompt {
         log.info(asciiJFixtures);
         log.info("JFixtures CMD version: " + PropertiesReader.PROJECT_VERSION);
         log.info("JFixtures version: " + PropertiesReader.J_FIXTURES_VERSION);
-        log.info(PropertiesReader.PROJECT_LINK);
+        log.info(PropertiesReader.PROJECT_LINK + "\n");
     }
 }

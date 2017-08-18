@@ -46,8 +46,8 @@ class CmdParserTest extends Specification {
         when:
         cmdParser.parse(args)
         then:
-        1 * printStream.write(_)
-        1 * printStream.flush()
+        (1.._) * printStream.write(_)
+        (1.._) * printStream.flush()
         0 * printStream.println({ it.contains("Usage") })
         сmdArgs.sqlType.toString() == "MYSQL"
         сmdArgs.source.toString() == "src/test/resources/fixtures"

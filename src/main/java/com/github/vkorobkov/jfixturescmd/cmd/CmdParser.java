@@ -4,6 +4,7 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import com.github.vkorobkov.jfixtures.JFixtures;
 import com.github.vkorobkov.jfixtures.fluent.JFixturesResult;
+import com.github.vkorobkov.jfixtures.sql.SqlType;
 import com.github.vkorobkov.jfixturescmd.utils.PropertiesReader;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,6 +16,7 @@ public final class CmdParser {
         final JCommander jCommander = buildJCommander();
 
         try {
+            log.debug("Start parsing command line...");
             jCommander.parse(args);
 
             if (cmdArgs.isHelp()) {
@@ -37,8 +39,13 @@ public final class CmdParser {
 
     private void generateSql() {
         String destination = cmdArgs.getDestination();
-        JFixturesResult result = JFixtures.byDialect(cmdArgs.getSource(), cmdArgs.getSqlType());
+        String fixturesFolder = cmdArgs.getSource();
+        SqlType sqlType = cmdArgs.getSqlType();
+
+        log.info("Fixtures folder: " + fixturesFolder);
+        log.info("SQL type: " + sqlType);
+        JFixturesResult result = JFixtures.byDialect(fixturesFolder, sqlType);
         result.toFile(destination);
-        log.info("The SQL file has bees successfully created: " + destination);
+        log.info("\nSUCCESS (destination file: " + destination + ")\n");
     }
 }
