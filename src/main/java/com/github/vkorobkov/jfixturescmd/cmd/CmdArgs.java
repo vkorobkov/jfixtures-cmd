@@ -11,7 +11,7 @@ final class CmdArgs {
             converter = SqlTypeConverter.class, order = 0)
     private SqlType sqlType;
 
-    @Parameter(names = "-src", description = "Source YAML folder path", required = true, order = 1)
+    @Parameter(names = "-src", description = "Source YAML fixtures folder path", required = true, order = 1)
     private String source;
 
     @Parameter(names = "-dst", description = "Destination SQL file path", required = true, order = 2)

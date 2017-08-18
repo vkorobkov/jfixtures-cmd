@@ -23,8 +23,8 @@ class CmdParserTest extends Specification {
         when:
         cmdParser.parse()
         then:
-        1 * printStream.write(_)
-        1 * printStream.flush()
+        2 * printStream.write(_)
+        2 * printStream.flush()
         1 * printStream.println({ it.contains("Usage") })
     }
 
@@ -34,8 +34,8 @@ class CmdParserTest extends Specification {
         when:
         cmdParser.parse(args)
         then:
-        0 * printStream.write(_)
-        0 * printStream.flush()
+        1 * printStream.write(_)
+        1 * printStream.flush()
         1 * printStream.println({ it.contains("Usage") })
         сmdArgs.isHelp()
     }
@@ -75,5 +75,17 @@ class CmdParserTest extends Specification {
         "postgres"   | "POSTGRES"
         "h2"         | "H2"
         "clickhouse" | "CLICKHOUSE"
+    }
+
+    def "fixtures folder is empty test"() {
+        given:
+        String[] args = ["-src", "", "-dst", "out.sql", "-type", "mysql"]
+        when:
+        cmdParser.parse(args)
+        then:
+        сmdArgs.getSource() == ""
+        2 * printStream.write(_)
+        2 * printStream.flush()
+        1 * printStream.println({ it.contains("Usage") })
     }
 }
