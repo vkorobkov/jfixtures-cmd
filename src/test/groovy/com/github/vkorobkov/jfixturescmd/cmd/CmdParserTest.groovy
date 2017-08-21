@@ -77,7 +77,7 @@ class CmdParserTest extends Specification {
         "clickhouse" | "CLICKHOUSE"
     }
 
-    def "fixtures folder is empty test"() {
+    def "fixtures folder is wrong test"() {
         given:
         String[] args = ["-src", "wrong_path", "-dst", "out.sql", "-type", "mysql"]
         when:
