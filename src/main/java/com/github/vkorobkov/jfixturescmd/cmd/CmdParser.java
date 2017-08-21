@@ -4,11 +4,11 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import com.github.vkorobkov.jfixtures.JFixtures;
 import com.github.vkorobkov.jfixtures.fluent.JFixturesResult;
+import com.github.vkorobkov.jfixtures.loader.LoaderException;
 import com.github.vkorobkov.jfixtures.sql.SqlType;
+import com.github.vkorobkov.jfixturescmd.utils.ExceptionHandler;
 import com.github.vkorobkov.jfixturescmd.utils.PropertiesReader;
 import lombok.extern.slf4j.Slf4j;
-
-import java.io.File;
 
 @Slf4j
 public final class CmdParser {
@@ -29,6 +29,8 @@ public final class CmdParser {
         } catch (ParameterException e) {
             log.error("Failed to parse command line arguments: " + e.getMessage());
             jCommander.usage();
+        } catch (LoaderException exception) {
+            ExceptionHandler.handleException(exception);
         }
     }
 
@@ -43,10 +45,6 @@ public final class CmdParser {
         String destination = cmdArgs.getDestination();
         String fixturesFolder = cmdArgs.getSource();
         SqlType sqlType = cmdArgs.getSqlType();
-
-        if (!new File(fixturesFolder).isDirectory()) {
-            throw new ParameterException("Source folder with fixtures '" + fixturesFolder + "' does not exist");
-        }
 
         log.info("Fixtures folder: " + fixturesFolder);
         log.info("SQL type: " + sqlType);

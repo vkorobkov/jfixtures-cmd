@@ -79,13 +79,12 @@ class CmdParserTest extends Specification {
 
     def "fixtures folder is empty test"() {
         given:
-        String[] args = ["-src", "", "-dst", "out.sql", "-type", "mysql"]
+        String[] args = ["-src", "wrong_path", "-dst", "out.sql", "-type", "mysql"]
         when:
         cmdParser.parse(args)
         then:
-        сmdArgs.getSource() == ""
-        2 * printStream.write(_)
-        2 * printStream.flush()
-        1 * printStream.println({ it.contains("Usage") })
+        сmdArgs.getSource() == "wrong_path"
+        4 * printStream.write(_)
+        4 * printStream.flush()
     }
 }
