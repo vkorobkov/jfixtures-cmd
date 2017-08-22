@@ -20,31 +20,31 @@ class ExceptionHandlerTest extends Specification {
 
     def "handle LoaderException from core project"() {
         given:
-        def exception = new LoaderException("Can not load fixtures from directory: wrong_path")
+        def exception = new LoaderException("LoaderException")
         when:
         ExceptionHandler.handleException(exception)
         then:
-        1 * printStream.write(_)
+        1 * printStream.write({ new String(it).contains("LoaderException") })
         1 * printStream.flush()
     }
 
     def "handle ProcessorException from core project"() {
         given:
-        def exception = new ProcessorException("Failed to process fixtures")
+        def exception = new ProcessorException("ProcessorException")
         when:
         ExceptionHandler.handleException(exception)
         then:
-        1 * printStream.write(_)
+        1 * printStream.write({ new String(it).contains("ProcessorException") })
         1 * printStream.flush()
     }
 
     def "handle ParameterException"() {
         given:
-        def exception = new ParameterException("Failed to parse command line arguments")
+        def exception = new ParameterException("ParameterException")
         when:
         ExceptionHandler.handleException(exception)
         then:
-        1 * printStream.write(_)
+        1 * printStream.write({ new String(it).contains("ParameterException") })
         1 * printStream.flush()
     }
 
@@ -54,7 +54,7 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        1 * printStream.write(_)
+        1 * printStream.write({ new String(it).contains("IOException") })
         1 * printStream.flush()
     }
 }
