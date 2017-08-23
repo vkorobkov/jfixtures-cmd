@@ -1,7 +1,7 @@
 package com.github.vkorobkov.jfixturescmd.utils
 
 class PrintStreamWrapper extends PrintStream {
-    private String content
+    private StringBuilder content = new StringBuilder()
 
     PrintStreamWrapper(OutputStream out) {
         super(out)
@@ -9,6 +9,12 @@ class PrintStreamWrapper extends PrintStream {
 
     @Override
     void write(byte[] buf) {
-        content = new String(buf)
+        content.append(new String(buf))
+        println "content" + content
+    }
+
+    @Override
+    void println(String string) {
+        content.append(string)
     }
 }

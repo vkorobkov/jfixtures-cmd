@@ -1,11 +1,17 @@
 package com.github.vkorobkov.jfixturescmd
 
+import com.github.vkorobkov.jfixturescmd.utils.PrintStreamWrapper
 import spock.lang.Specification
 
 import static com.github.vkorobkov.jfixturescmd.Prompt.write
 
 class PromptTest extends Specification {
-    def printStream = Mock(PrintStream)
+    def printStream
+
+    def setup() {
+        printStream = new PrintStreamWrapper(System.out)
+        System.out = printStream
+    }
 
     def "constructor test"() {
         expect:
@@ -13,12 +19,9 @@ class PromptTest extends Specification {
     }
 
     def "should write prompt"() {
-        given:
-        System.out = printStream
         when:
         write()
         then:
-        (1.._) * printStream.write(_)
-        (1.._) * printStream.flush()
+        printStream.content.contains("For more info please visit \${project.scm.url}")
     }
 }
