@@ -10,7 +10,6 @@ class PrintStreamWrapper extends PrintStream {
     @Override
     void write(byte[] buf) {
         content.append(new String(buf))
-        println "content" + content
     }
 
     @Override
