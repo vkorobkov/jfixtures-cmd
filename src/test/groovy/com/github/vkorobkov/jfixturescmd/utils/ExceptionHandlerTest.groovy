@@ -6,11 +6,11 @@ import com.github.vkorobkov.jfixtures.processor.ProcessorException
 import spock.lang.Specification
 
 class ExceptionHandlerTest extends Specification {
-    def printStream
+    def printStreamWrapper
 
     def setup() {
-        printStream = Mock(PrintStream)
-        System.out = printStream
+        printStreamWrapper = new PrintStreamWrapper(System.out)
+        System.out = printStreamWrapper
     }
 
     def "constructor test"() {
@@ -24,8 +24,7 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        1 * printStream.write({ new String(it).contains("LoaderException") })
-        1 * printStream.flush()
+        printStreamWrapper.content.contains("Failed to load fixtures: LoaderException")
     }
 
     def "handle ProcessorException from core project"() {
@@ -34,8 +33,7 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        1 * printStream.write({ new String(it).contains("ProcessorException") })
-        1 * printStream.flush()
+        printStreamWrapper.content.contains("Failed to process fixtures: ProcessorException")
     }
 
     def "handle ParameterException"() {
@@ -44,8 +42,7 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        1 * printStream.write({ new String(it).contains("ParameterException") })
-        1 * printStream.flush()
+        printStreamWrapper.content.contains("Failed to parse command line arguments: ParameterException")
     }
 
     def "handle unexpected exception"() {
@@ -54,7 +51,6 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        1 * printStream.write({ new String(it).contains("IOException") })
-        1 * printStream.flush()
+        printStreamWrapper.content.contains("IOException")
     }
 }
