@@ -9,7 +9,7 @@ class ExceptionHandlerTest extends Specification {
     def printStream
 
     def setup() {
-        printStream = new PrintStreamWrapper(System.out)
+        printStream = TestPrintStream.create()
         System.out = printStream
     }
 
@@ -24,7 +24,7 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        printStream.content.contains("Failed to load fixtures: LoaderException")
+        printStream.getContent().contains("Failed to load fixtures: LoaderException")
     }
 
     def "handle ProcessorException from core project"() {
@@ -33,7 +33,7 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        printStream.content.contains("Failed to process fixtures: ProcessorException")
+        printStream.getContent().contains("Failed to process fixtures: ProcessorException")
     }
 
     def "handle ParameterException"() {
@@ -42,7 +42,7 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        printStream.content.contains("Failed to parse command line arguments: ParameterException")
+        printStream.getContent().contains("Failed to parse command line arguments: ParameterException")
     }
 
     def "handle unexpected exception"() {
@@ -51,6 +51,6 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        printStream.content.contains("IOException")
+        printStream.getContent().contains("IOException")
     }
 }

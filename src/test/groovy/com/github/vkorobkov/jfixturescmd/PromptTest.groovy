@@ -1,6 +1,6 @@
 package com.github.vkorobkov.jfixturescmd
 
-import com.github.vkorobkov.jfixturescmd.utils.PrintStreamWrapper
+import com.github.vkorobkov.jfixturescmd.utils.TestPrintStream
 import spock.lang.Specification
 
 import static com.github.vkorobkov.jfixturescmd.Prompt.write
@@ -9,7 +9,7 @@ class PromptTest extends Specification {
     def printStream
 
     def setup() {
-        printStream = new PrintStreamWrapper(System.out)
+        printStream = TestPrintStream.create()
         System.out = printStream
     }
 
@@ -22,6 +22,6 @@ class PromptTest extends Specification {
         when:
         write()
         then:
-        printStream.content.contains("For more info please visit \${project.scm.url}")
+        printStream.getContent().contains("For more info please visit \${project.scm.url}")
     }
 }

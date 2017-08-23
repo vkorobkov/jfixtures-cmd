@@ -1,15 +1,16 @@
 package com.github.vkorobkov.jfixturescmd.cmd
 
-import com.github.vkorobkov.jfixturescmd.utils.PrintStreamWrapper
+import com.github.vkorobkov.jfixturescmd.utils.TestPrintStream
 import spock.lang.Specification
 
 class CmdParserTest extends Specification {
     def printStream
     def cmdParser
     def сmdArgs
+    def content
 
     def setup() {
-        printStream = new PrintStreamWrapper(System.out)
+        printStream = TestPrintStream.create()
         cmdParser = new CmdParser()
         сmdArgs = cmdParser.cmdArgs
         System.out = printStream
@@ -23,10 +24,11 @@ class CmdParserTest extends Specification {
     def "parse without arguments"() {
         when:
         cmdParser.parse()
+        content = printStream.getContent()
         then:
-        printStream.content.contains("Start parsing command line")
-        printStream.content.contains("Failed to parse command line arguments")
-        printStream.content.contains("Usage")
+        content.contains("Start parsing command line")
+        content.contains("Failed to parse command line arguments")
+        content.contains("Usage")
     }
 
     def "parse with help argument"() {
@@ -34,9 +36,10 @@ class CmdParserTest extends Specification {
         String[] args = ["-h"]
         when:
         cmdParser.parse(args)
+        content = printStream.getContent()
         then:
-        printStream.content.contains("Start parsing command line")
-        printStream.content.contains("Usage")
+        content.contains("Start parsing command line")
+        content.contains("Usage")
         сmdArgs.isHelp()
     }
 
@@ -56,12 +59,13 @@ class CmdParserTest extends Specification {
         String[] args = ["-src", "src/test/resources/fixtures", "-dst", "out.sql", "-type", "mysql"]
         when:
         cmdParser.parse(args)
+        content = printStream.getContent()
         then:
-        printStream.content.contains("Start parsing command line")
-        printStream.content.contains("Fixtures folder:")
-        printStream.content.contains("SQL type: MYSQL")
-        printStream.content.contains("SUCCESS (destination file: out.sql)")
-        !printStream.content.contains("Usage")
+        content.contains("Start parsing command line")
+        content.contains("Fixtures folder:")
+        content.contains("SQL type: MYSQL")
+        content.contains("SUCCESS (destination file: out.sql)")
+        !content.contains("Usage")
     }
 
     def "null type when type is not valid"() {
@@ -92,9 +96,10 @@ class CmdParserTest extends Specification {
         String[] args = ["-src", "wrong_path", "-dst", "out.sql", "-type", "mysql"]
         when:
         cmdParser.parse(args)
+        content = printStream.getContent()
         then:
         сmdArgs.getSource() == "wrong_path"
-        printStream.content.contains("Failed to load fixtures: Can not load fixtures from directory: wrong_path")
-        printStream.content.contains("Usage")
+        content.contains("Failed to load fixtures: Can not load fixtures from directory: wrong_path")
+        content.contains("Usage")
     }
 }
