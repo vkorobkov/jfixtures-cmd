@@ -1,18 +1,32 @@
 package com.github.vkorobkov.jfixturescmd.utils
 
 class TestPrintStream extends PrintStream {
-    private static ByteArrayOutputStream outputStream
+    private final ByteArrayOutputStream stream
 
-    TestPrintStream() {
-        super(outputStream)
+    TestPrintStream(ByteArrayOutputStream stream) {
+        super(stream)
+        this.stream = stream
     }
 
     static TestPrintStream create() {
-        outputStream = new ByteArrayOutputStream()
-        return new TestPrintStream()
+        new TestPrintStream(new ByteArrayOutputStream())
     }
 
-    static String getContent() {
-       return outputStream.toString()
+    static TestPrintStream stubStdOut() {
+        def printStream = create()
+        System.out = printStream
+        printStream
+    }
+
+    static boolean contains(String text) {
+        stdOut.containsText(text)
+    }
+
+    private static TestPrintStream getStdOut() {
+        System.out as TestPrintStream
+    }
+
+    private boolean containsText(String text) {
+        stream.toString().contains(text)
     }
 }

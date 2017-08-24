@@ -6,11 +6,8 @@ import spock.lang.Specification
 import static com.github.vkorobkov.jfixturescmd.Prompt.write
 
 class PromptTest extends Specification {
-    def printStream
-
     def setup() {
-        printStream = TestPrintStream.create()
-        System.out = printStream
+        TestPrintStream.stubStdOut()
     }
 
     def "constructor test"() {
@@ -22,6 +19,6 @@ class PromptTest extends Specification {
         when:
         write()
         then:
-        printStream.getContent().contains("For more info please visit \${project.scm.url}")
+        TestPrintStream.contains("For more info please visit \${project.scm.url}")
     }
 }

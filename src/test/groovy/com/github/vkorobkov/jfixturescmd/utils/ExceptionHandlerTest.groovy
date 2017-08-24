@@ -6,11 +6,8 @@ import com.github.vkorobkov.jfixtures.processor.ProcessorException
 import spock.lang.Specification
 
 class ExceptionHandlerTest extends Specification {
-    def printStream
-
     def setup() {
-        printStream = TestPrintStream.create()
-        System.out = printStream
+        TestPrintStream.stubStdOut()
     }
 
     def "constructor test"() {
@@ -24,7 +21,7 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        printStream.getContent().contains("Failed to load fixtures: LoaderException")
+        TestPrintStream.contains("Failed to load fixtures: LoaderException")
     }
 
     def "handle ProcessorException from core project"() {
@@ -33,7 +30,7 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        printStream.getContent().contains("Failed to process fixtures: ProcessorException")
+        TestPrintStream.contains("Failed to process fixtures: ProcessorException")
     }
 
     def "handle ParameterException"() {
@@ -42,7 +39,7 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        printStream.getContent().contains("Failed to parse command line arguments: ParameterException")
+        TestPrintStream.contains("Failed to parse command line arguments: ParameterException")
     }
 
     def "handle unexpected exception"() {
@@ -51,6 +48,6 @@ class ExceptionHandlerTest extends Specification {
         when:
         ExceptionHandler.handleException(exception)
         then:
-        printStream.getContent().contains("IOException")
+        TestPrintStream.contains("IOException")
     }
 }
