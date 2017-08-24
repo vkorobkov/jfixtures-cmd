@@ -6,7 +6,6 @@ import spock.lang.Specification
 class CmdParserTest extends Specification {
     def cmdParser
     def сmdArgs
-    def content
 
     def setup() {
         TestPrintStream.stubStdOut()
@@ -84,6 +83,10 @@ class CmdParserTest extends Specification {
         "postgres"   | "POSTGRES"
         "h2"         | "H2"
         "clickhouse" | "CLICKHOUSE"
+        "mssql"      | "MSSQL"
+        "sybase"     | "SYBASE"
+        "sqlite"     | "SQLITE"
+        "oracle"     | "ORACLE"
     }
 
     def "fixtures folder is wrong test"() {

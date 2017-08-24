@@ -24,6 +24,6 @@ class SqlTypeConverterTest extends Specification {
 
         then:
         def e = thrown(ParameterException)
-        e.message == "SQL type 'wrong_type' is not valid. Available types are: [postgres, mysql, h2, clickhouse]"
+        e.message == "SQL type 'wrong_type' is not valid. Available types are: [postgres, mysql, h2, clickhouse, mssql, sybase, sqlite, oracle]"
     }
 }
