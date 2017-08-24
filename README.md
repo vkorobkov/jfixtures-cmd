@@ -16,7 +16,16 @@ java -jar jfixtures-cmd-1.XX.jar <options>
 where options are:
 
   -type [required] 
-  the database dialect to general SQL result for. Possible values are: postgres, mysql, h2, clickhouse. Not cases sensitive
+  the database dialect to general SQL result for. Possible values are: 
+  * postgres
+  * mysql
+  * h2
+  * clickhouse
+  * oracle
+  * mssql
+  * sybase
+  * sqlite
+  Not cases sensitive.
   
   -src [required] 
   relative or full path to the folder where the source yaml fixtures are
