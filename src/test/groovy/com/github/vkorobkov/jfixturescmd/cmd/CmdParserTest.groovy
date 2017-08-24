@@ -78,15 +78,10 @@ class CmdParserTest extends Specification {
         сmdArgs.sqlType.toString() == expected
 
         where:
-        dialect      | expected
-        "mysql"      | "MYSQL"
-        "postgres"   | "POSTGRES"
-        "h2"         | "H2"
-        "clickhouse" | "CLICKHOUSE"
-        "mssql"      | "MSSQL"
-        "sybase"     | "SYBASE"
-        "sqlite"     | "SQLITE"
-        "oracle"     | "ORACLE"
+        dialect | expected
+        "mysql" | "MYSQL"
+        "mssql" | "MSSQL"
+        "sql99" | "SQL99"
     }
 
     def "fixtures folder is wrong test"() {
