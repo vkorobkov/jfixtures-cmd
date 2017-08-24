@@ -17,14 +17,9 @@ where options are:
 
   -type [required] 
   the database dialect to general SQL result for. Possible values are: 
-  * postgres
   * mysql
-  * h2
-  * clickhouse
-  * oracle
   * mssql
-  * sybase
-  * sqlite
+  * sql99 (such as Oracle, Sybase, Postgres, H2, SQLite and etc.)
   Not cases sensitive.
   
   -src [required] 
@@ -39,5 +34,5 @@ where options are:
 
 ### Examples
 ```bash
-java -jar jfixtures-cmd-1.0.0.jar -src path/to/fixures/folder -dst path/to/ouput/file.sql -type postgres
+java -jar jfixtures-cmd-1.0.0.jar -src path/to/fixures/folder -dst path/to/ouput/file.sql -type sql99
 ```
