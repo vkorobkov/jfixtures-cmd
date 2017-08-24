@@ -1,10 +1,10 @@
 package com.github.vkorobkov.jfixturescmd.cmd;
 
 import com.beust.jcommander.JCommander;
-import com.beust.jcommander.ParameterException;
 import com.github.vkorobkov.jfixtures.JFixtures;
 import com.github.vkorobkov.jfixtures.fluent.JFixturesResult;
 import com.github.vkorobkov.jfixtures.sql.SqlType;
+import com.github.vkorobkov.jfixturescmd.utils.ExceptionHandler;
 import com.github.vkorobkov.jfixturescmd.utils.PropertiesReader;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,8 +24,8 @@ public final class CmdParser {
             } else {
                 generateSql();
             }
-        } catch (ParameterException e) {
-            log.error("Failed to parse command line arguments: " + e.getMessage());
+        } catch (Exception e) {
+            ExceptionHandler.handleException(e);
             jCommander.usage();
         }
     }
