@@ -1,6 +1,6 @@
 ![alt text](https://travis-ci.org/vkorobkov/jfixtures-cmd.svg?branch=master "Build status")
 
-# jfixtures-cmd
+# JFixtures-cmd
 Command line interface for [JFixtures project](https://github.com/vkorobkov/jfixtures)
 
 ## Dependencies
