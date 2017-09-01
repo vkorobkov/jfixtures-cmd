@@ -15,7 +15,7 @@ java -jar jfixtures-cmd-1.XX.jar <options>
 
 where options are:
 
-  -type [required] 
+  -type [optional]
   the database dialect to general SQL result for. Possible values are: 
   * mysql
   * mssql
@@ -26,7 +26,10 @@ where options are:
   relative or full path to the folder where the source yaml fixtures are
   
   -dst [required] 
-  relative or full path to the destination SQL file. Old file(if exists) will be overriten.
+  relative or full path to the destination SQL/XML file. Old file(if exists) will be overriten.
+  
+  -xml [optional] [default: false]
+  export to XML format instead of SQL one. The -type option is ignored in this case. 
   
   -h, --help [optional]
   Print help message

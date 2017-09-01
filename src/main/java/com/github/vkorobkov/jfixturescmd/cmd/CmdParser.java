@@ -2,18 +2,17 @@ package com.github.vkorobkov.jfixturescmd.cmd;
 
 import com.beust.jcommander.JCommander;
 import com.github.vkorobkov.jfixtures.JFixtures;
-import com.github.vkorobkov.jfixtures.fluent.JFixturesResult;
-import com.github.vkorobkov.jfixtures.sql.SqlType;
 import com.github.vkorobkov.jfixturescmd.utils.ExceptionHandler;
 import com.github.vkorobkov.jfixturescmd.utils.PropertiesReader;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 
 @Slf4j
 public final class CmdParser {
     private final CmdArgs cmdArgs = new CmdArgs();
 
     public void parse(String[] args) {
-        final JCommander jCommander = buildJCommander();
+        val jCommander = buildJCommander();
 
         try {
             log.debug("Start parsing command line...");
@@ -22,7 +21,7 @@ public final class CmdParser {
             if (cmdArgs.isHelp()) {
                 jCommander.usage();
             } else {
-                generateSql();
+                generateData();
             }
         } catch (Exception e) {
             ExceptionHandler.handleException(e);
@@ -37,15 +36,19 @@ public final class CmdParser {
                 .build();
     }
 
-    private void generateSql() {
-        String destination = cmdArgs.getDestination();
-        String fixturesFolder = cmdArgs.getSource();
-        SqlType sqlType = cmdArgs.getSqlType();
+    private void generateData() {
+        val destination = cmdArgs.getDestination();
+        val fixturesFolder = cmdArgs.getSource();
+        val sqlType = cmdArgs.getSqlType();
 
         log.info("Fixtures folder: " + fixturesFolder);
-        log.info("SQL type: " + sqlType);
-        JFixturesResult result = JFixtures.byDialect(fixturesFolder, sqlType);
-        result.toFile(destination);
+        if (cmdArgs.isXml()) {
+            log.info("Export type: XML");
+            JFixtures.xml(fixturesFolder).toFile(destination);
+        } else {
+            log.info("SQL type: " + sqlType);
+            JFixtures.byDialect(fixturesFolder, sqlType).toFile(destination);
+        }
         log.info("\nSUCCESS (destination file: " + destination + ")\n");
     }
 }

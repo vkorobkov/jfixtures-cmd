@@ -94,4 +94,27 @@ class CmdParserTest extends Specification {
         TestPrintStream.contains("Failed to load fixtures: Can not load fixtures from directory: wrong_path")
         TestPrintStream.contains("Usage")
     }
+
+    def "export to XML"() {
+        given:
+        String[] args = ["-src", "src/test/resources/fixtures", "-dst", "out.xml", "-xml"]
+        when:
+        cmdParser.parse(args)
+        then:
+        сmdArgs.source.toString() == "src/test/resources/fixtures"
+        сmdArgs.destination.toString() == "out.xml"
+    }
+
+    def "export to XML - test messages"() {
+        given:
+        String[] args = ["-src", "src/test/resources/fixtures", "-dst", "out.xml", "-xml"]
+        when:
+        cmdParser.parse(args)
+        then:
+        TestPrintStream.contains("Start parsing command line")
+        TestPrintStream.contains("Fixtures folder:")
+        TestPrintStream.contains("Export type: XML")
+        TestPrintStream.contains("SUCCESS (destination file: out.xml)")
+        !TestPrintStream.contains("Usage")
+    }
 }
