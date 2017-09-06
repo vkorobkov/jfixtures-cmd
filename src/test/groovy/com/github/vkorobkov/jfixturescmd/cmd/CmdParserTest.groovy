@@ -1,5 +1,6 @@
 package com.github.vkorobkov.jfixturescmd.cmd
 
+import com.beust.jcommander.ParameterException
 import com.github.vkorobkov.jfixturescmd.utils.TestPrintStream
 import spock.lang.Specification
 
@@ -44,7 +45,7 @@ class CmdParserTest extends Specification {
         when:
         cmdParser.parse(args)
         then:
-        сmdArgs.sqlType.toString() == "MYSQL"
+        сmdArgs.destinationType.toString() == "mysql"
         сmdArgs.source.toString() == "src/test/resources/fixtures"
         сmdArgs.destination.toString() == "out.sql"
     }
@@ -57,7 +58,7 @@ class CmdParserTest extends Specification {
         then:
         TestPrintStream.contains("Start parsing command line")
         TestPrintStream.contains("Fixtures folder:")
-        TestPrintStream.contains("SQL type: MYSQL")
+        TestPrintStream.contains("SQL type: mysql")
         TestPrintStream.contains("SUCCESS (destination file: out.sql)")
         !TestPrintStream.contains("Usage")
     }
@@ -68,20 +69,20 @@ class CmdParserTest extends Specification {
         when:
         cmdParser.parse(args)
         then:
-        сmdArgs.sqlType == null
+        сmdArgs.destinationType == "wrong_type"
     }
 
     def "generate SQL for all dialects"(String dialect, expected) {
         expect:
         String[] args = ["-src", "src/test/resources/fixtures", "-dst", "out.sql", "-type", dialect]
         cmdParser.parse(args)
-        сmdArgs.sqlType.toString() == expected
+        сmdArgs.destinationType.toString() == expected
 
         where:
         dialect | expected
-        "mysql" | "MYSQL"
-        "mssql" | "MSSQL"
-        "sql99" | "SQL99"
+        "mysql" | "mysql"
+        "mssql" | "mssql"
+        "sql99" | "sql99"
     }
 
     def "fixtures folder is wrong test"() {
@@ -97,7 +98,7 @@ class CmdParserTest extends Specification {
 
     def "export to XML"() {
         given:
-        String[] args = ["-src", "src/test/resources/fixtures", "-dst", "out.xml", "-xml"]
+        String[] args = ["-src", "src/test/resources/fixtures", "-dst", "out.xml", "-type", "xml"]
         when:
         cmdParser.parse(args)
         then:
@@ -107,7 +108,7 @@ class CmdParserTest extends Specification {
 
     def "export to XML - test messages"() {
         given:
-        String[] args = ["-src", "src/test/resources/fixtures", "-dst", "out.xml", "-xml"]
+        String[] args = ["-src", "src/test/resources/fixtures", "-dst", "out.xml", "-type", "xml"]
         when:
         cmdParser.parse(args)
         then:
@@ -116,5 +117,21 @@ class CmdParserTest extends Specification {
         TestPrintStream.contains("Export type: XML")
         TestPrintStream.contains("SUCCESS (destination file: out.xml)")
         !TestPrintStream.contains("Usage")
+    }
+
+    def "should convert valid value to SQL type"() {
+        expect:
+        cmdParser.convertToSqlType("mysql").toString() == "MYSQL"
+        cmdParser.convertToSqlType("MySql").toString() == "MYSQL"
+        cmdParser.convertToSqlType("MYSQL").toString() == "MYSQL"
+    }
+
+    def "should throw an exception when type in not found"() {
+        when:
+        cmdParser.convertToSqlType("wrong_type")
+
+        then:
+        def e = thrown(ParameterException)
+        e.message == "SQL type 'wrong_type' is not valid. Available SQL types are: [mysql, mssql, sql99]"
     }
 }
