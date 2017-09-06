@@ -1,6 +1,6 @@
 ![alt text](https://travis-ci.org/vkorobkov/jfixtures-cmd.svg?branch=master "Build status")
 
-# jfixtures-cmd
+# JFixtures-cmd
 Command line interface for [JFixtures project](https://github.com/vkorobkov/jfixtures)
 
 ## Dependencies
@@ -15,18 +15,19 @@ java -jar jfixtures-cmd-1.XX.jar <options>
 
 where options are:
 
-  -type [required] 
+  -type [required]
   the database dialect to general SQL result for. Possible values are: 
   * mysql
   * mssql
   * sql99 (such as Oracle, Sybase, Postgres, H2, SQLite and etc.)
+  * xml (for export to XML format)
   Not cases sensitive.
   
   -src [required] 
   relative or full path to the folder where the source yaml fixtures are
   
   -dst [required] 
-  relative or full path to the destination SQL file. Old file(if exists) will be overriten.
+  relative or full path to the destination SQL/XML file. Old file(if exists) will be overriten.
   
   -h, --help [optional]
   Print help message
