@@ -11,8 +11,6 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
@@ -44,23 +42,22 @@ public final class CmdParser {
         val type = cmdArgs.getDestinationType();
 
         log.info("Fixtures folder: " + fixturesFolder);
-        if (Objects.equals(type.toLowerCase(), "xml")) {
+        if (type.equalsIgnoreCase("xml")) {
             log.info("Export type: XML");
             JFixtures.xml(fixturesFolder).toFile(destination);
         } else {
             log.info("SQL type: " + type);
-            JFixtures.byDialect(fixturesFolder, convertToSqlType(type)).toFile(destination);
+            JFixtures.byDialect(fixturesFolder, getSqlDialect(type)).toFile(destination);
         }
         log.info("\nSUCCESS (destination file: " + destination + ")\n");
     }
 
     @SneakyThrows
-    private SqlType convertToSqlType(final String value) {
+    private SqlType getSqlDialect(String value) {
         Optional<SqlType> sqlType = EnumUtil.valueOf(SqlType.class, value.toUpperCase());
         return sqlType.orElseThrow(() -> {
-                    String availableTypes = Arrays.toString(SqlType.values()).toLowerCase();
-                    throw new ParameterException("SQL type '" + value + "' is not valid. "
-                            + "Available SQL types are: " + availableTypes);
+                    throw new ParameterException("Output type '" + value + "' is not valid. "
+                            + "Possible output types are: [mysql, mssql, sql99, xml]");
                 }
         );
     }

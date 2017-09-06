@@ -121,17 +121,17 @@ class CmdParserTest extends Specification {
 
     def "should convert valid value to SQL type"() {
         expect:
-        cmdParser.convertToSqlType("mysql").toString() == "MYSQL"
-        cmdParser.convertToSqlType("MySql").toString() == "MYSQL"
-        cmdParser.convertToSqlType("MYSQL").toString() == "MYSQL"
+        cmdParser.getSqlDialect("mysql").toString() == "MYSQL"
+        cmdParser.getSqlDialect("MySql").toString() == "MYSQL"
+        cmdParser.getSqlDialect("MYSQL").toString() == "MYSQL"
     }
 
     def "should throw an exception when type in not found"() {
         when:
-        cmdParser.convertToSqlType("wrong_type")
+        cmdParser.getSqlDialect("wrong_type")
 
         then:
         def e = thrown(ParameterException)
-        e.message == "SQL type 'wrong_type' is not valid. Available SQL types are: [mysql, mssql, sql99]"
+        e.message == "Output type 'wrong_type' is not valid. Possible output types are: [mysql, mssql, sql99, xml]"
     }
 }
