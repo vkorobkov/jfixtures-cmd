@@ -46,9 +46,9 @@
         <java.version>1.8</java.version>
 
         <!--Project dependencies version-->
-        <jfixtures.version>1.0.27</jfixtures.version>
+        <jfixtures.version>1.0.31</jfixtures.version>
         <jcommander.version>1.72</jcommander.version>
-        <lombok.version>1.16.18</lombok.version>
+        <lombok.version>1.16.20</lombok.version>
         <jfiglet.version>0.0.8</jfiglet.version>
         <logback.version>1.2.3</logback.version>
 
@@ -60,10 +60,10 @@
         <!--Plugins-->
         <maven-assembly-plugin.version>3.0.0</maven-assembly-plugin.version>
         <maven-compiler-plugin.version>3.6.1</maven-compiler-plugin.version>
-        <jacoco-maven-plugin.version>0.7.9</jacoco-maven-plugin.version>
-        <gmavenplus-plugin.version>1.5</gmavenplus-plugin.version>
-        <findbugs-maven-plugin.version>3.0.4</findbugs-maven-plugin.version>
-        <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
+        <jacoco-maven-plugin.version>0.8.0</jacoco-maven-plugin.version>
+        <gmavenplus-plugin.version>1.6</gmavenplus-plugin.version>
+        <findbugs-maven-plugin.version>3.0.5</findbugs-maven-plugin.version>
+        <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
     </properties>
 
     <build>
@@ -171,7 +171,7 @@
                     <execution>
                         <goals>
                             <goal>addTestSources</goal>
-                            <goal>testCompile</goal>
+                            <goal>compileTests</goal>
                         </goals>
                     </execution>
                     <execution>
