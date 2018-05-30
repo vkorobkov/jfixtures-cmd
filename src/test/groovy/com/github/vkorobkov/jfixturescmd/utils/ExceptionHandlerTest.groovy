@@ -5,6 +5,8 @@ import com.github.vkorobkov.jfixtures.loader.LoaderException
 import com.github.vkorobkov.jfixtures.processor.ProcessorException
 import spock.lang.Specification
 
+import java.nio.file.NoSuchFileException
+
 class ExceptionHandlerTest extends Specification {
     def setup() {
         TestPrintStream.stubStdOut()
@@ -22,6 +24,15 @@ class ExceptionHandlerTest extends Specification {
         ExceptionHandler.handleException(exception)
         then:
         TestPrintStream.contains("Failed to load fixtures: LoaderException")
+    }
+
+    def "handle NoSuchFileException from core project"() {
+        given:
+        def exception = new NoSuchFileException("NoSuchFileException")
+        when:
+        ExceptionHandler.handleException(exception)
+        then:
+        TestPrintStream.contains("Failed to load fixtures: NoSuchFileException")
     }
 
     def "handle ProcessorException from core project"() {

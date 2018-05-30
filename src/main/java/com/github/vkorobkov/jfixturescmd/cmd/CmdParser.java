@@ -42,12 +42,13 @@ public final class CmdParser {
         val type = cmdArgs.getDestinationType();
 
         log.info("Fixtures folder: " + fixturesFolder);
+        val result = JFixtures.noConfig().load(fixturesFolder).compile();
         if (type.equalsIgnoreCase("xml")) {
             log.info("Export type: XML");
-            JFixtures.xml(fixturesFolder).toFile(destination);
+            result.toXml().toFile(destination);
         } else {
             log.info("SQL type: " + type);
-            JFixtures.byDialect(fixturesFolder, getSqlDialect(type)).toFile(destination);
+            result.toSql(getSqlDialect(type)).toFile(destination);
         }
         log.info("\nSUCCESS (destination file: " + destination + ")\n");
     }

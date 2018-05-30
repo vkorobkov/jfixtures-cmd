@@ -85,14 +85,14 @@ class CmdParserTest extends Specification {
         "sql99" | "sql99"
     }
 
-    def "fixtures folder is wrong test"() {
+    def "fixtures folder or file path is wrong"() {
         given:
         String[] args = ["-src", "wrong_path", "-dst", "out.sql", "-type", "mysql"]
         when:
         cmdParser.parse(args)
         then:
         сmdArgs.source == "wrong_path"
-        TestPrintStream.contains("Failed to load fixtures: Can not load fixtures from directory: wrong_path")
+        TestPrintStream.contains("Failed to load fixtures: wrong_path")
         TestPrintStream.contains("Usage")
     }
 
